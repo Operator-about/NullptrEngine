@@ -13,20 +13,11 @@ using namespace std;
 
 class VkMain{
 public:
-
-    VkInstance Instance = {};
-    VkInstanceCreateInfo Info = {};
-    VkPhysicalDevice PhysicalDevice = {};
-    VkSurfaceKHR Surface = {};
-    VkAndroidSurfaceCreateInfoKHR SurfaceInfo = {};
-    vector<const char*> Extensions;
-
     void VkInitialization();
-    void VkInstanceInitialization();
-    void VkExtensionsInitialization();
-    void VkPhysicalDevicesInitialization();
-    void VkLogicalDevicesInitialization();
-    void VKSurfaceInitialization();
+    void VkInstanceInitialization(VkInstance& Instance, VkInstanceCreateInfo& Info);
+    void VkPhysicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice& PhysicalDevice);
+    void VkLogicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkDevice& Device);
+    void VkSurfaceInitialization(VkInstance Instance, VkSurfaceKHR& Surface, VkAndroidSurfaceCreateInfoKHR& SurfaceInfo, ANativeWindow* Window);
 };
 
 

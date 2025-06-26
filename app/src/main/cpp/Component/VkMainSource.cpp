@@ -3,22 +3,27 @@
 void VkMain::VkInitialization()
 {
 
-    VkExtensionsInitialization();
-    VkInstanceInitialization();
-    VkPhysicalDevicesInitialization();
-    //VkLogicalDevicesInitialization();
+//    vector<const char*> Extensions;
+//    Extensions.push_back("VK_KHR_SURFACE");
+//    Extensions.push_back("VK_KHR_android_surface");
 
-};
+    VkInstance Instance = {};
+    VkInstanceCreateInfo Info = {};
+    VkInstanceInitialization(Instance, Info);
+    VkSurfaceKHR Surface = {};
 
-void VkMain::VkExtensionsInitialization()
-{
-    Extensions.push_back("VK_KHR_SURFACE");
-    Extensions.push_back("VK_KHR_android_surface");
+    VkPhysicalDevice PhysicalDevice = {};
+    VkPhysicalDeviceInitialization(Instance, PhysicalDevice);
+
+    VkDevice Device = {};
+    VkLogicalDeviceInitialization(Instance, PhysicalDevice, Surface, Device);
 }
 
-void VkMain::VkInstanceInitialization()
+//    Info.enabledExtensionCount = static_cast<uint32_t>(Extensions.size());
+//    Info.ppEnabledExtensionNames = Extensions.data();
+
+void VkMain::VkInstanceInitialization(VkInstance &Instance, VkInstanceCreateInfo &Info)
 {
-    VkExtensionsInitialization();
     VkApplicationInfo App = {};
     App.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     App.applicationVersion = VK_MAKE_VERSION(1,0,0);
@@ -29,81 +34,83 @@ void VkMain::VkInstanceInitialization()
 
     Info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     Info.pApplicationInfo = &App;
-    Info.enabledExtensionCount = static_cast<uint32_t>(Extensions.size());
-    Info.ppEnabledExtensionNames = Extensions.data();
     Info.enabledLayerCount = 0;
     Info.pNext = nullptr;
 
     vkCreateInstance(&Info, nullptr, &Instance);
 }
 
-void VkMain::VkPhysicalDevicesInitialization()
+void VkMain::VkPhysicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice &PhysicalDevice)
 {
     uint32_t PhysicalDeviceCount = 0;
     vkEnumeratePhysicalDevices(Instance, &PhysicalDeviceCount, nullptr);
     vector<VkPhysicalDevice> LocalDevice(PhysicalDeviceCount);
     vkEnumeratePhysicalDevices(Instance, &PhysicalDeviceCount, LocalDevice.data());
 
-    for(const VkPhysicalDevice LocalDeviceLoop : LocalDevice)
-    {
-        PhysicalDevice = LocalDeviceLoop;
-    }
+    PhysicalDevice = LocalDevice.data()[0];
 }
 
-void VkMain::VkLogicalDevicesInitialization()
+
+void VkMain::VkLogicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkDevice &Device)
 {
-    uint32_t CountQueue = 0;
-    vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &CountQueue, nullptr);
-    vector<VkQueueFamilyProperties> QueueProp(CountQueue);
-    vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &CountQueue, QueueProp.data());
+
+    uint32_t QueueCount = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &QueueCount, nullptr);
+    vector<VkQueueFamilyProperties> LocalQueue(QueueCount);
+    vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &QueueCount, LocalQueue.data());
 
     uint32_t QueueGraphicsIndex = 0;
     uint32_t QueuePresentIndex = 0;
 
-    for(int i = 0; i<QueueProp.size();i++)
+    for(uint32_t i = 0; i<LocalQueue.size(); i++)
     {
-        VkBool32 PresentValid = false;
-        vkGetPhysicalDeviceSurfaceSupportKHR(PhysicalDevice, i, Surface, &PresentValid);
-        if(PresentValid)
+        VkBool32 SurfaceValid = false;
+        vkGetPhysicalDeviceSurfaceSupportKHR(PhysicalDevice, i, Surface, &SurfaceValid);
+        if(SurfaceValid == true)
         {
             QueuePresentIndex = i;
         }
 
-        VkQueueFamilyProperties LocalQueueProp = QueueProp[i];
-        if(LocalQueueProp.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+        VkQueueFamilyProperties LocalPropQueue = LocalQueue[i];
+        if(LocalPropQueue.queueFlags & VK_QUEUE_GRAPHICS_BIT)
         {
             QueueGraphicsIndex = i;
             break;
         }
     }
 
-    vector<VkDeviceQueueCreateInfo> QueueInfos;
+    vector<VkDeviceQueueCreateInfo> QueueInfos = {};
     set<uint32_t> UnQueue = {QueueGraphicsIndex, QueuePresentIndex};
 
+    float QueuePrority = 1.0f;
     for(const uint32_t LocalQueue : UnQueue)
     {
-        VkDeviceQueueCreateInfo QueueInfo = {};
-        QueueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        QueueInfo.queueCount = 1;
-        QueueInfo.queueFamilyIndex = LocalQueue; //Если, что-то пойдёт не так, то надо поставить QueueGraphicsIndex
-
-        QueueInfos.push_back(QueueInfo);
+        VkDeviceQueueCreateInfo LocalInfoQueue = {};
+        LocalInfoQueue.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        LocalInfoQueue.queueCount = 1;
+        LocalInfoQueue.pQueuePriorities = &QueuePrority;
+        LocalInfoQueue.queueFamilyIndex = LocalQueue;
+        QueueInfos.push_back(LocalInfoQueue);
     }
 
     VkDeviceCreateInfo DeviceInfo = {};
     DeviceInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
     DeviceInfo.enabledExtensionCount = 0;
-    DeviceInfo.queueCreateInfoCount = static_cast<uint32_t>(QueueInfos.size());
+    DeviceInfo.queueCreateInfoCount = (uint32_t)QueueInfos.size();
     DeviceInfo.pQueueCreateInfos = QueueInfos.data();
 
-    VkDevice Device = {};
+
     vkCreateDevice(PhysicalDevice, &DeviceInfo, nullptr, &Device);
+
+
 }
 
-void VkMain::VKSurfaceInitialization()
+void VkMain::VkSurfaceInitialization(VkInstance Instance, VkSurfaceKHR &Surface, VkAndroidSurfaceCreateInfoKHR &SurfaceInfo, ANativeWindow* Window)
 {
     SurfaceInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
-    //.window = Window;
+    SurfaceInfo.window = Window;
+    vkCreateAndroidSurfaceKHR(Instance, &SurfaceInfo , nullptr, &Surface);
 
-    vkCreateAndroidSurfaceKHR(Instance, &SurfaceInfo, nullptr, &Surface);
 }
+
+
