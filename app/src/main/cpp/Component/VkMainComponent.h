@@ -13,11 +13,12 @@ using namespace std;
 
 class VkMain{
 public:
-    void VkInitialization();
+    void VkInitialization(ANativeWindow* Window);
     void VkInstanceInitialization(VkInstance& Instance, VkInstanceCreateInfo& Info);
     void VkPhysicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice& PhysicalDevice);
     void VkLogicalDeviceInitialization(VkInstance Instance, VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkDevice& Device);
     void VkSurfaceInitialization(VkInstance Instance, VkSurfaceKHR& Surface, VkAndroidSurfaceCreateInfoKHR& SurfaceInfo, ANativeWindow* Window);
+    void VkSwapchainInitialization(VkDevice Device, VkSwapchainCreateInfoKHR& SwapchainInfo, VkSwapchainKHR& Swapchain);
 };
 
 

@@ -1,29 +1,33 @@
 #include"VkMainComponent.h"
 
-void VkMain::VkInitialization()
+void VkMain::VkInitialization(ANativeWindow* Window)
 {
-
-//    vector<const char*> Extensions;
-//    Extensions.push_back("VK_KHR_SURFACE");
-//    Extensions.push_back("VK_KHR_android_surface");
 
     VkInstance Instance = {};
     VkInstanceCreateInfo Info = {};
     VkInstanceInitialization(Instance, Info);
+
     VkSurfaceKHR Surface = {};
+    VkAndroidSurfaceCreateInfoKHR SurfaceInfo = {};
+    VkSurfaceInitialization(Instance, Surface, SurfaceInfo, Window);
 
     VkPhysicalDevice PhysicalDevice = {};
     VkPhysicalDeviceInitialization(Instance, PhysicalDevice);
 
     VkDevice Device = {};
     VkLogicalDeviceInitialization(Instance, PhysicalDevice, Surface, Device);
+
+
 }
 
-//    Info.enabledExtensionCount = static_cast<uint32_t>(Extensions.size());
-//    Info.ppEnabledExtensionNames = Extensions.data();
+
 
 void VkMain::VkInstanceInitialization(VkInstance &Instance, VkInstanceCreateInfo &Info)
 {
+    vector<const char*> Extensions;
+    Extensions.push_back("VK_KHR_SURFACE");
+    Extensions.push_back("VK_KHR_android_surface");
+
     VkApplicationInfo App = {};
     App.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     App.applicationVersion = VK_MAKE_VERSION(1,0,0);
@@ -34,6 +38,8 @@ void VkMain::VkInstanceInitialization(VkInstance &Instance, VkInstanceCreateInfo
 
     Info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     Info.pApplicationInfo = &App;
+//    Info.enabledExtensionCount = (uint32_t)Extensions.size();
+//    Info.ppEnabledExtensionNames = Extensions.data();
     Info.enabledLayerCount = 0;
     Info.pNext = nullptr;
 
@@ -110,6 +116,12 @@ void VkMain::VkSurfaceInitialization(VkInstance Instance, VkSurfaceKHR &Surface,
     SurfaceInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
     SurfaceInfo.window = Window;
     vkCreateAndroidSurfaceKHR(Instance, &SurfaceInfo , nullptr, &Surface);
+}
+
+void VkMain::VkSwapchainInitialization(VkDevice Device, VkSwapchainCreateInfoKHR &SwapchainInfo, VkSwapchainKHR &Swapchain)
+{
+
+    vkCreateSwapchainKHR(Device, &SwapchainInfo, nullptr, &Swapchain);
 
 }
 

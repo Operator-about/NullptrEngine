@@ -16,16 +16,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        VkStartup();
+        VkStartup(binding.Viewport.holder.surface);
     }
 
-    /**
-     * A native method that is implemented by the 'nullptrengine' native library,
-     * which is packaged with this application.
-     */
-    external fun VkStartup(): Unit
+
+    external fun VkStartup(surface: Surface): Unit
+
+
     companion object {
-        // Used to load the 'nullptrengine' library on application startup.
+
         init {
             System.loadLibrary("nullptrengine")
         }

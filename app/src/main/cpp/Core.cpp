@@ -9,13 +9,13 @@ using namespace std;
 extern "C" JNIEXPORT void JNICALL
 Java_com_cubevertex_nullptrengine_MainActivity_VkStartup(
         JNIEnv* env,
-        jobject /* this */) {
+        jobject /* this */, jobject Surface) {
 
 
 
-
+    ANativeWindow* Window = ANativeWindow_fromSurface(env, Surface);
     VkMain Main = VkMain();
-    Main.VkInitialization();
+    Main.VkInitialization(Window);
 
 
 }
