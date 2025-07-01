@@ -9,19 +9,22 @@ class VkMain
 {
 
 public:
+
 	void VkInitialization(GLFWwindow* Window);
 
 private:
-	VkInstance Instance;
-	VkPhysicalDevice PhysicalDevice;
-	VkDevice Device;
+	VkInstance Instance = {};
+	VkPhysicalDevice PhysicalDevice = {};
+	VkDevice Device = {};
 	uint32_t GraphicsQueue = 0, PresentQueue = 0;
-	VkSwapchainKHR Swapchain;
-	VkSurfaceKHR Surface;
+	VkSwapchainKHR Swapchain = {};
+	VkSurfaceKHR Surface = {};
+	VkSurfaceFormatKHR Format = {};
 
 	void VkInstanceInitialization();
 	void VkPhysicalDeviceInitialization();
 	void VkLogicalDeviceInitialization();
 	void VkSurfaceInitialization(GLFWwindow* Window);
 	void VkSwapchainInitialization();
+	void VkImageViewInitialization();
 };

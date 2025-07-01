@@ -126,10 +126,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Source\ModelLoadSource.cpp" />
     <ClCompile Include="Component\Source\VkMainSource.cpp" />
     <ClCompile Include="NullptrEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\ModelLoadComponent.h" />
     <ClInclude Include="Component\VkMainComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

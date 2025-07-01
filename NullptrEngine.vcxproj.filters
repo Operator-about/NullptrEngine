@@ -27,9 +27,15 @@
     <ClCompile Include="Component\Source\VkMainSource.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Source\ModelLoadSource.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\VkMainComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ModelLoadComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
