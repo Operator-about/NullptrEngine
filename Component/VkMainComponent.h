@@ -20,6 +20,7 @@ private:
 	VkSwapchainKHR Swapchain = {};
 	VkSurfaceKHR Surface = {};
 	VkSurfaceFormatKHR Format = {};
+	VkRenderPass RenderPass = {};
 
 	void VkInstanceInitialization();
 	void VkPhysicalDeviceInitialization();
@@ -27,4 +28,5 @@ private:
 	void VkSurfaceInitialization(GLFWwindow* Window);
 	void VkSwapchainInitialization();
 	void VkImageViewInitialization();
+	void VkRenderPassInitialization();
 };
