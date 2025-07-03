@@ -126,13 +126,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Source\LoadFileSource.cpp" />
     <ClCompile Include="Component\Source\ModelLoadSource.cpp" />
     <ClCompile Include="Component\Source\VkMainSource.cpp" />
     <ClCompile Include="NullptrEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\LoadFileComponents.h" />
     <ClInclude Include="Component\ModelLoadComponent.h" />
     <ClInclude Include="Component\VkMainComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\CompileShader.bat" />
+    <None Include="Shader\FragShader.frag" />
+    <None Include="Shader\VertShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

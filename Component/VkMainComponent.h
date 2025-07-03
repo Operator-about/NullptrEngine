@@ -29,4 +29,5 @@ private:
 	void VkSwapchainInitialization();
 	void VkImageViewInitialization();
 	void VkRenderPassInitialization();
+	void VkShaderInitialization(string VertexShader, string FragmentShader);
 };

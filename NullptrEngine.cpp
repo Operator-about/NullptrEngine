@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include<GLFW/glfw3.h>
 #include<VkMainComponent.h>
-using namespace std;
 
 int main()
 {

@@ -249,36 +249,38 @@ void VkMain::VkImageViewInitialization()
 
 void VkMain::VkRenderPassInitialization() 
 {
-	//Переменная для привязок
+	//Создание переменной для привязки
 	VkAttachmentDescription Attachment = {};
 	Attachment.format = Format.format; //Формат
-	Attachment.samples = VK_SAMPLE_COUNT_4_BIT; //Anti-Alasing
-	Attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; //Очистка буфера перед рендером
-	Attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE; //Сохранения буфера в память после рендера
-	Attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE; //Трафарет не используется
-	Attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE; //Трафарет не используется
-	Attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; //Состояние изображение перед рендером: неизвестно
-	Attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; //Состояние изображение после рендера: можно отрисовывать на экран
-	
-	//Переменная для привязки Attachment
-	VkAttachmentReference AttachmentReference = {};
-	AttachmentReference.attachment = 0; //Индекс attachment
-	AttachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; //Изображение используется для хранения цввета во время рендера
+	Attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; //Отчистить буфер перед рендером
+	Attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE; //Сохранить буфер в памяти после рендера
+	Attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE; //Трафарет
+	Attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE; //Трафарет
+	Attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; //Состояние изображения до рендера: неизвестно
+	Attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; //Состояние изображения после рендера: можно показывать на экран
+	Attachment.samples = VK_SAMPLE_COUNT_1_BIT; //MultiSample
 
-	//Переменная для подзадач RenderPass
+	//Создание переменной ссылки на наш Attachment
+	VkAttachmentReference AttachmentReference = {};
+	AttachmentReference.attachment = 0; //Индекс Attachment
+	AttachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; //Изображение используется для прикрепления цвета
+
+	//Создание подзадачи для RenderPass
 	VkSubpassDescription Subpass = {};
 	Subpass.colorAttachmentCount = 1; //Кол-во Attachment
-	Subpass.pColorAttachments = &AttachmentReference; //Привязка Attachment
-	Subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS; //Режим конвеера: графический режим
+	Subpass.pColorAttachments = &AttachmentReference; //Ссылка на Attachment
+	Subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS; //Режим конвеера: графический
 
-	//Переменная для хранения информации о Renderpass
+	//Создание информации о RenderPass
 	VkRenderPassCreateInfo RenderPassInfo = {};
 	RenderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-	RenderPassInfo.attachmentCount = 1; //кол-во Attachment
+	RenderPassInfo.attachmentCount = 1; //Кол-во Attachment
 	RenderPassInfo.pAttachments = &Attachment; //Сам Attachment
-	RenderPassInfo.subpassCount = 1; //Кол-во подзадача Renderpass
-	RenderPassInfo.pSubpasses = &Subpass; //Сам Subpass
+	RenderPassInfo.subpassCount = 1; //Кол-во подзадач
+	RenderPassInfo.pSubpasses = &Subpass; //Сама подзадача
 
+
+	VkRenderPass RenderPass = {};
 	//Создание RenderPass
 	vkCreateRenderPass(Device, &RenderPassInfo, nullptr, &RenderPass);
 }

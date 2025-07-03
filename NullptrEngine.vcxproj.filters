@@ -19,6 +19,9 @@
     <Filter Include="Component\Source">
       <UniqueIdentifier>{8f971b29-3e90-4934-831f-1a8a0a53cd15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{ec8b6151-95ba-4679-804c-c37f1e751337}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NullptrEngine.cpp">
@@ -30,6 +33,9 @@
     <ClCompile Include="Component\Source\ModelLoadSource.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Source\LoadFileSource.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\VkMainComponent.h">
@@ -38,5 +44,19 @@
     <ClInclude Include="Component\ModelLoadComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="Component\LoadFileComponents.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\FragShader.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\VertShader.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\CompileShader.bat">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
