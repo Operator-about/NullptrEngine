@@ -3,6 +3,7 @@
 #include<set>
 #include<vulkan/vulkan.h>
 #include<GLFW/glfw3.h>
+#include<LoadFileComponents.h>
 using namespace std;
 
 class VkMain
@@ -21,6 +22,9 @@ private:
 	VkSurfaceKHR Surface = {};
 	VkSurfaceFormatKHR Format = {};
 	VkRenderPass RenderPass = {};
+	VkShaderModule ShaderVertexModule = {};
+	VkShaderModule ShaderFragmentModule = {};
+
 
 	void VkInstanceInitialization();
 	void VkPhysicalDeviceInitialization();
@@ -30,4 +34,5 @@ private:
 	void VkImageViewInitialization();
 	void VkRenderPassInitialization();
 	void VkShaderInitialization(string VertexShader, string FragmentShader);
+	void VkGraphicsPipelineInitialization();
 };

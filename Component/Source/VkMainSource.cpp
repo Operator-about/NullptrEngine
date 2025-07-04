@@ -15,6 +15,10 @@ void VkMain::VkInitialization(GLFWwindow* Window)
 	VkImageViewInitialization();
 
 	VkRenderPassInitialization();
+
+	VkShaderInitialization("Shader/Vert.spv","Shader/Frag.spv");
+
+	VkGraphicsPipelineInitialization();
 }
 
 
@@ -280,7 +284,54 @@ void VkMain::VkRenderPassInitialization()
 	RenderPassInfo.pSubpasses = &Subpass; //Сама подзадача
 
 
-	VkRenderPass RenderPass = {};
+	
 	//Создание RenderPass
 	vkCreateRenderPass(Device, &RenderPassInfo, nullptr, &RenderPass);
+}
+
+void VkMain::VkShaderInitialization(string VertexShader, string FragmentShader)
+{
+	vector<string> VertShader = LoadFile(VertexShader);
+	vector<string> FragShader = LoadFile(FragmentShader);
+
+	VkShaderModuleCreateInfo ShaderVertexModuleInfo = {};
+	ShaderVertexModuleInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+	ShaderVertexModuleInfo.codeSize = VertShader.size();
+	ShaderVertexModuleInfo.pCode = reinterpret_cast<const uint32_t*>(VertShader.data());
+
+	VkShaderModuleCreateInfo ShaderFragmentModuleInfo = {};
+	ShaderFragmentModuleInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+	ShaderFragmentModuleInfo.codeSize = FragShader.size();
+	ShaderFragmentModuleInfo.pCode = reinterpret_cast<const uint32_t*>(FragShader.data());
+
+	
+	vkCreateShaderModule(Device, &ShaderVertexModuleInfo, nullptr, &ShaderVertexModule);
+	vkCreateShaderModule(Device, &ShaderFragmentModuleInfo, nullptr, &ShaderFragmentModule);
+}
+
+void VkMain::VkGraphicsPipelineInitialization()
+{
+	VkPipelineShaderStageCreateInfo VertexShaderStage = {};
+	VertexShaderStage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	VertexShaderStage.stage = VK_SHADER_STAGE_VERTEX_BIT;
+	VertexShaderStage.module = ShaderVertexModule;
+	VertexShaderStage.pName = "main";
+
+	VkPipelineShaderStageCreateInfo FragmentShaderStage = {};
+	FragmentShaderStage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	FragmentShaderStage.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+	FragmentShaderStage.module = ShaderFragmentModule;
+	FragmentShaderStage.pName = "main";
+
+	VkPipelineShaderStageCreateInfo ShaderStage[] = {VertexShaderStage, FragmentShaderStage};
+
+	VkGraphicsPipelineCreateInfo GraphicsPipelineInfo = {};
+	GraphicsPipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+	GraphicsPipelineInfo.renderPass = RenderPass;
+	GraphicsPipelineInfo.stageCount = 2;
+	GraphicsPipelineInfo.pStages = ShaderStage;
+
+	VkPipeline GraphicsPipeline = {};
+	vkCreateGraphicsPipelines(Device, VK_NULL_HANDLE, 2, &GraphicsPipelineInfo, nullptr, &GraphicsPipeline);
+
 }
