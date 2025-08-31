@@ -2,6 +2,8 @@ package com.operator_about.nullptrengine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Surface
+import android.view.SurfaceView
 import android.widget.TextView
 import com.operator_about.nullptrengine.databinding.ActivityMainBinding
 
@@ -15,14 +17,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        StartupNullptrEngine()
+        StartupNullptrEngine(binding.Viewport.holder.surface)
     }
 
-    /**
-     * A native method that is implemented by the 'nullptrengine' native library,
-     * which is packaged with this application.
-     */
-    external fun StartupNullptrEngine(): Unit
+
+    external fun StartupNullptrEngine(surface: Surface): Unit
 
     companion object {
         // Used to load the 'nullptrengine' library on application startup.

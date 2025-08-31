@@ -6,15 +6,25 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<android/native_window.h>
+#include<android/native_window_jni.h>
+#include<set>
 using namespace std;
 
 class StartupNullptrEngine
 {
 public:
-    StartupNullptrEngine();
+    StartupNullptrEngine(ANativeWindow* Window);
+    VkInstance Instance = {};
+    VkPhysicalDevice PhysicalDevice = {};
+    VkPhysicalDeviceFeatures PhysicalDeviceFeatures = {};
+    VkDevice Device = {};
+    VkSurfaceKHR Surface = {};
 private:
     void StartupNullptrEngineInstance();
     void StartupNullptrEnginePhysicalDevice();
+    void StartupNullptrEngineSurface(ANativeWindow* Window);
+    void StartupNullptrEngineDevice();
 };
 
 #endif //NULLPTRENGINE_STARTUPNULLPTRENGINECOMPONENT_H
