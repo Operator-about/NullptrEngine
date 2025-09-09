@@ -1,17 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/PropertiesText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <SurfaceView
-        android:id="@+id/Viewport"
-        android:layout_width="699dp"
-        android:layout_height="487dp"
-        android:layout_marginEnd="568dp"
-        android:layout_marginBottom="302dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/Top"
+        android:layout_width="match_parent"
+        android:layout_height="488dp"
+        android:orientation="horizontal">
+
+        <TableRow
+            android:id="@+id/TopLeftRow"
+            android:layout_width="701dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <SurfaceView
+                android:id="@+id/Viewport"
+                android:layout_width="699dp"
+                android:layout_height="487dp"
+                android:layout_marginEnd="568dp"
+                android:layout_marginBottom="302dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </TableRow>
+
+        <View
+            android:id="@+id/TopLeftAndRightDivider"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider" />
+
+        <TableRow
+            android:id="@+id/TopRightRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/TopAndBottomDivider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/Bottom"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal">
+
+        <TableRow
+            android:id="@+id/BottomRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Properties"
+                android:layout_width="179dp"
+                android:layout_height="90dp"
+                android:text="TextView"
+                android:textColor="#F4F4F4"
+                android:textSize="20sp" />
+        </TableRow>
+
+    </LinearLayout>
+
+</LinearLayout>

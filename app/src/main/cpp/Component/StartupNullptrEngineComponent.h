@@ -9,6 +9,7 @@
 #include<android/native_window.h>
 #include<android/native_window_jni.h>
 #include<set>
+#include"GetDataNullptrEngineComponent.h"
 using namespace std;
 
 class StartupNullptrEngine
@@ -25,6 +26,7 @@ private:
     void StartupNullptrEnginePhysicalDevice();
     void StartupNullptrEngineSurface(ANativeWindow* Window);
     void StartupNullptrEngineDevice();
+
 };
 
 #endif //NULLPTRENGINE_STARTUPNULLPTRENGINECOMPONENT_H

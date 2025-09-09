@@ -18,10 +18,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         StartupNullptrEngine(binding.Viewport.holder.surface)
+        binding.Properties.text = GetDataNullptrEngine();
     }
 
 
     external fun StartupNullptrEngine(surface: Surface): Unit
+    external fun GetDataNullptrEngine(): String
 
     companion object {
         // Used to load the 'nullptrengine' library on application startup.
