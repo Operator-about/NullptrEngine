@@ -54,7 +54,7 @@
         android:id="@+id/Bottom"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TableRow
             android:id="@+id/BottomRow"

@@ -47,8 +47,8 @@ void StartupNullptrEngine::StartupNullptrEngineInstance()
         Layers.push_back(LayersProperties[i].layerName);
     }
 
-    //InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(Extension.size());
-    //InstanceInfo.ppEnabledExtensionNames = Extension.data();
+//    InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(Extension.size());
+//    InstanceInfo.ppEnabledExtensionNames = Extension.data();
     InstanceInfo.enabledLayerCount = static_cast<uint32_t>(LayersProperties.size());
     InstanceInfo.ppEnabledLayerNames = Layers.data();
 
@@ -70,6 +70,8 @@ void StartupNullptrEngine::StartupNullptrEngineSurface(ANativeWindow* Window)
 {
     VkAndroidSurfaceCreateInfoKHR SurfaceInfo = {
             .sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR,
+            .pNext = nullptr,
+            .flags = 0,
             .window = Window
     };
     vkCreateAndroidSurfaceKHR(Instance, &SurfaceInfo, nullptr, &Surface);
@@ -81,8 +83,6 @@ void StartupNullptrEngine::StartupNullptrEngineDevice()
     vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &QueueCount, nullptr);
     vector<VkQueueFamilyProperties> QueueProperties(QueueCount);
     vkGetPhysicalDeviceQueueFamilyProperties(PhysicalDevice, &QueueCount, QueueProperties.data());
-
-    uint32_t GraphicsQueueFamily = 0, PresentQueueFamily = 0;
 
     for(int i = 0; i < QueueProperties.size(); i++)
     {
@@ -124,5 +124,8 @@ void StartupNullptrEngine::StartupNullptrEngineDevice()
             .pQueueCreateInfos = QueueInfos.data()
     };
 
+
+    uint32_t LQueueFamilyIndex[] = {GraphicsQueueFamily, PresentQueueFamily};
+    QueueFamilyIndex = LQueueFamilyIndex;
     vkCreateDevice(PhysicalDevice, &DeviceInfo, nullptr, &Device);
 }

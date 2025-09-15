@@ -10,6 +10,7 @@
 #include<android/native_window_jni.h>
 #include<set>
 #include"GetDataNullptrEngineComponent.h"
+#include"CreateObjectNullptrEngineComponent.h"
 using namespace std;
 
 class StartupNullptrEngine
@@ -21,7 +22,14 @@ public:
     VkPhysicalDeviceFeatures PhysicalDeviceFeatures = {};
     VkDevice Device = {};
     VkSurfaceKHR Surface = {};
+
+    uint32_t GraphicsQueueFamily = 0, PresentQueueFamily = 0;
+    uint32_t* QueueFamilyIndex;
+
 private:
+    GetDataNullptrEngine Data = GetDataNullptrEngine();
+    CreateObjectNullptrEngine NewObject = CreateObjectNullptrEngine();
+
     void StartupNullptrEngineInstance();
     void StartupNullptrEnginePhysicalDevice();
     void StartupNullptrEngineSurface(ANativeWindow* Window);

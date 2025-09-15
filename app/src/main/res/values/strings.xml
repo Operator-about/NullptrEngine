@@ -1,3 +1,5 @@
 <resources>
+    <string name="viewport_tab">Editor</string>
+    <string name="code_editor_tab">Code Editor</string>
     <string name="app_name">NullptrEngine</string>
 </resources>

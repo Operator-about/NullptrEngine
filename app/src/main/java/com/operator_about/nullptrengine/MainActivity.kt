@@ -18,12 +18,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         StartupNullptrEngine(binding.Viewport.holder.surface)
-        binding.Properties.text = GetDataNullptrEngine();
+        binding.Properties.text = GetDataNullptrEngine()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ShutdownNullptrEngine()
     }
 
 
     external fun StartupNullptrEngine(surface: Surface): Unit
     external fun GetDataNullptrEngine(): String
+    external fun ShutdownNullptrEngine(): Unit
+
 
     companion object {
         // Used to load the 'nullptrengine' library on application startup.

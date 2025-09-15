@@ -29,7 +29,9 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         MainCall.cpp
         Component/StartupNullptrEngineSource.cpp
         Component/GetDataNullptrEngineSource.cpp
-        Component/CreateObjectNullptrEngineSource.cpp)
+        Component/CreateObjectNullptrEngineSource.cpp
+        Component/ShutdownNullptrEngineSource.cpp)
+
 
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this

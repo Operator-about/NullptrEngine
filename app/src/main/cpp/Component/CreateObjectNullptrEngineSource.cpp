@@ -14,10 +14,14 @@ VkImage CreateObjectNullptrEngine::CreateImage(VkDevice Device, VkImageType Type
             .samples = Sample,
             .tiling = Tiling,
             .usage = Usage,
-            .sharingMode = Mode,
-            .queueFamilyIndexCount = QueueCount,
-            .pQueueFamilyIndices = QueueFamilyIndex
+            .sharingMode = Mode
     };
+
+    if(ImageInfo.sharingMode == VK_SHARING_MODE_CONCURRENT)
+    {
+        ImageInfo.queueFamilyIndexCount = QueueCount;
+        ImageInfo.pQueueFamilyIndices = QueueFamilyIndex;
+    }
 
     VkImage Image = {};
     vkCreateImage(Device, &ImageInfo, nullptr, &Image);

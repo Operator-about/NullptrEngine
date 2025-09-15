@@ -1,9 +1,10 @@
-#include <jni.h>
-#include <string>
+#include<jni.h>
+#include<string>
 #include<iostream>
 #include<vector>
 #include"Component/StartupNullptrEngineComponent.h"
 #include"Component/GetDataNullptrEngineComponent.h"
+#include"Component/ShutdownNullptrEngineComponent.h"
 #include<android/native_window.h>
 #include<android/native_window_jni.h>
 using namespace std;
@@ -32,4 +33,12 @@ Java_com_operator_1about_nullptrengine_MainActivity_GetDataNullptrEngine(
     Properties += string() + PDP.deviceName;
 
     return env->NewStringUTF(Properties.c_str());
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_operator_1about_nullptrengine_MainActivity_ShutdownNullptrEngine(
+        JNIEnv* env,
+        jobject /* this */) {
+
+    ShutdownNullptrEngine Shutdown = ShutdownNullptrEngine(NullptrEngine.Instance, NullptrEngine.Device);
 }

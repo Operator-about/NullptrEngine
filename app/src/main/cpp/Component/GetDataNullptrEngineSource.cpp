@@ -1,17 +1,18 @@
 #include "GetDataNullptrEngineComponent.h"
 
-VkSurfaceFormatKHR GetDataNullptrEngine::GetFormat(VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkColorSpaceKHR Color, VkFormat LFormat)
+void GetDataNullptrEngine::GetFormat(VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkColorSpaceKHR Color, VkFormat LFormat)
 {
     uint32_t FormatCount = 0;
     vkGetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &FormatCount, nullptr);
-    vector<VkSurfaceFormatKHR> Formats(FormatCount);
-    vkGetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &FormatCount, Formats.data());
+    vector<VkSurfaceFormatKHR> LFormats(FormatCount);
+    vkGetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &FormatCount, LFormats.data());
 
-    for(auto Format : Formats)
+    for(VkSurfaceFormatKHR Format : LFormats)
     {
         if(Format.colorSpace == Color && Format.format == LFormat)
         {
-            return Format;
+            Formats = Format;
+            break;
         }
     }
 }
@@ -46,4 +47,21 @@ VkPhysicalDeviceProperties GetDataNullptrEngine::GetPhysicalDeviceProperties(VkP
     vkGetPhysicalDeviceProperties(PhysicalDevice, &PhysicalDeviceProperties);
 
     return PhysicalDeviceProperties;
+}
+
+VkPhysicalDeviceFeatures GetDataNullptrEngine::GetPhysicalDeviceFeatures(VkPhysicalDevice PhysicalDevice)
+{
+    VkPhysicalDeviceFeatures DeviceFeatures = {};
+    vkGetPhysicalDeviceFeatures(PhysicalDevice, &DeviceFeatures);
+
+    return DeviceFeatures;
+}
+
+pair<VkImageSubresource, VkSubresourceLayout> GetDataNullptrEngine::GetImageSubresource(VkDevice Device, VkImage Image)
+{
+    const VkImageSubresource Subresource = {};
+    VkSubresourceLayout SubresourceLayout = {};
+    vkGetImageSubresourceLayout(Device, Image, &Subresource, &SubresourceLayout);
+
+    return {Subresource, SubresourceLayout};
 }
