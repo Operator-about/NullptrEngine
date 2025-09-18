@@ -15,6 +15,8 @@ public:
                         VkSampleCountFlagBits Sample, VkImageTiling Tiling, VkImageUsageFlags Usage, VkSharingMode Mode,
                         uint32_t QueueCount = 0, uint32_t* QueueFamilyIndex = nullptr);
 
+    VkImageView CreateImageView(VkDevice Device, VkImage Image, VkImageViewType Type, VkFormat Format, VkComponentMapping Component, VkImageSubresourceRange Subresource);
+
     VkBuffer CreateBuffer(VkDevice Device, VkDeviceSize Size, VkBufferUsageFlagBits Usage, VkSharingMode Mode, uint32_t QueueCount = 0, uint32_t* QueueFamilyIndex = 0);
 };
 

@@ -47,3 +47,21 @@ VkBuffer CreateObjectNullptrEngine::CreateBuffer(VkDevice Device, VkDeviceSize S
     return Buffer;
 }
 
+VkImageView CreateObjectNullptrEngine::CreateImageView(VkDevice Device, VkImage Image, VkImageViewType Type, VkFormat Format, VkComponentMapping Component, VkImageSubresourceRange Subresource)
+{
+    VkImageViewCreateInfo ViewInfo = {
+            .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+            .image = Image,
+            .viewType = Type,
+            .format = Format,
+            .components = Component,
+            .subresourceRange = Subresource
+    };
+
+    VkImageView ImageView = {};
+
+    vkCreateImageView(Device, &ViewInfo, nullptr, &ImageView);
+
+    return ImageView;
+}
+

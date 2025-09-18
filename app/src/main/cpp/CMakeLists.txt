@@ -30,7 +30,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         Component/StartupNullptrEngineSource.cpp
         Component/GetDataNullptrEngineSource.cpp
         Component/CreateObjectNullptrEngineSource.cpp
-        Component/ShutdownNullptrEngineSource.cpp)
+        Component/ShutdownNullptrEngineSource.cpp
+        Component/MemoryManagementNullptrEngineSource.cpp)
 
 
 # Specifies libraries CMake should link to your target library. You
