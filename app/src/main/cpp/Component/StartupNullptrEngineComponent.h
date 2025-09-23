@@ -11,6 +11,7 @@
 #include<set>
 #include"GetDataNullptrEngineComponent.h"
 #include"CreateObjectNullptrEngineComponent.h"
+#include"MemoryManagementNullptrEngineComponent.h"
 using namespace std;
 
 class StartupNullptrEngine
@@ -29,6 +30,7 @@ public:
 private:
     GetDataNullptrEngine Data = GetDataNullptrEngine();
     CreateObjectNullptrEngine NewObject = CreateObjectNullptrEngine();
+    MemoryManagementNullptrEngine MemoryManagement = MemoryManagementNullptrEngine();
 
     void StartupNullptrEngineInstance();
     void StartupNullptrEnginePhysicalDevice();

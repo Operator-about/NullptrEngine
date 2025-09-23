@@ -6,6 +6,11 @@ ShutdownNullptrEngine::ShutdownNullptrEngine(VkInstance Instance, VkDevice Devic
     this->ShutdownNullptrEngineInstance(Instance);
 }
 
+void ShutdownNullptrEngine::ShutdownNullptrEngineBufferView(VkDevice Device, VkBufferView BufferView)
+{
+    vkDestroyBufferView(Device, BufferView, nullptr);
+}
+
 void ShutdownNullptrEngine::ShutdownNullptrEngineImageView(VkDevice Device, VkImageView ImageView)
 {
     vkDestroyImageView(Device, ImageView, nullptr);

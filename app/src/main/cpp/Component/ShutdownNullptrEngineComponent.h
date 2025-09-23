@@ -13,6 +13,7 @@ public:
     void ShutdownNullptrEngineBuffer(VkDevice Device, VkBuffer Buffer);
     void ShutdownNullptrEngineImage(VkDevice Device, VkImage Image);
     void ShutdownNullptrEngineImageView(VkDevice Device, VkImageView ImageView);
+    void ShutdownNullptrEngineBufferView(VkDevice Device, VkBufferView BufferView);
 private:
     void ShutdownNullptrEngineInstance(VkInstance Instance);
     void ShutdownNullptrEngineDevice(VkDevice Device);
