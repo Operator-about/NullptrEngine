@@ -29,14 +29,6 @@ Java_com_operator_1about_nullptrengine_MainActivity_GetDataNullptrEngine(
 
     string Properties;
 
-    VkBuffer Buffer = {};
-    CreateObjectNullptrEngine Object = CreateObjectNullptrEngine();
-    Object.CreateBuffer(NullptrEngine.Device, Buffer, 1024*1024*8, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_SHARING_MODE_EXCLUSIVE);
-    MemoryManagementNullptrEngine MemoryManagement = MemoryManagementNullptrEngine();
-    VkMemoryRequirements MemBufferReq = {};
-    MemoryManagement.GetBufferMemoryRequirements(NullptrEngine.Device, Buffer, MemBufferReq);
-    Properties = to_string(static_cast<int>(MemBufferReq.size));
-
     if(Properties == "")
     {
         Properties = "NULL_VALUE_FOR_PROPERTIES";
