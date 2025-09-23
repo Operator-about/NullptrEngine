@@ -28,10 +28,11 @@ Java_com_operator_1about_nullptrengine_MainActivity_GetDataNullptrEngine(
 
     string Properties;
 
-    GetDataNullptrEngine Data = GetDataNullptrEngine();
-    VkPhysicalDeviceProperties PDP = Data.GetPhysicalDeviceProperties(NullptrEngine.PhysicalDevice);
-    Properties += string() + PDP.deviceName;
 
+    if(Properties == "")
+    {
+        Properties = "NULL_VALUE_FOR_PROPERTIES";
+    }
     return env->NewStringUTF(Properties.c_str());
 }
 
