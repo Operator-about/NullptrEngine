@@ -2,7 +2,7 @@
 
 
 //Создание изображения Image
-VkImage CreateObjectNullptrEngine::CreateImage(VkDevice Device, VkImageType Type, VkFormat Format, VkExtent3D Size, uint32_t MipLevel, uint32_t ArrayLayers,
+void CreateObjectNullptrEngine::CreateImage(VkDevice Device, VkImage& Image, VkImageType Type, VkFormat Format, VkExtent3D Size, uint32_t MipLevel, uint32_t ArrayLayers,
                                                VkSampleCountFlagBits Sample, VkImageTiling Tiling, VkImageUsageFlags Usage, VkSharingMode Mode,
                                                uint32_t QueueCount, uint32_t* QueueFamilyIndex)
 {
@@ -29,14 +29,11 @@ VkImage CreateObjectNullptrEngine::CreateImage(VkDevice Device, VkImageType Type
         ImageInfo.pQueueFamilyIndices = QueueFamilyIndex; //Назначение потоков
     }
 
-    VkImage Image = {};
     vkCreateImage(Device, &ImageInfo, nullptr, &Image);
-
-    return Image;
 }
 
 //Создание буфера Buffer
-VkBuffer CreateObjectNullptrEngine::CreateBuffer(VkDevice Device, VkDeviceSize Size, VkBufferUsageFlagBits Usage, VkSharingMode Mode, uint32_t QueueCount, uint32_t* QueueFamilyIndex)
+void CreateObjectNullptrEngine::CreateBuffer(VkDevice Device, VkBuffer& Buffer, VkDeviceSize Size, VkBufferUsageFlagBits Usage, VkSharingMode Mode, uint32_t QueueCount, uint32_t* QueueFamilyIndex)
 {
     VkBufferCreateInfo BufferInfo = {
             .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
@@ -55,15 +52,11 @@ VkBuffer CreateObjectNullptrEngine::CreateBuffer(VkDevice Device, VkDeviceSize S
         BufferInfo.pQueueFamilyIndices = QueueFamilyIndex; //Назначение потоков
     }
 
-    VkBuffer Buffer = {};
-
     vkCreateBuffer(Device, &BufferInfo, nullptr, &Buffer);
-
-    return Buffer;
 }
 
 //Создание абстракции для взаимодействия с изображением(Image) ImageView
-VkImageView CreateObjectNullptrEngine::CreateImageView(VkDevice Device, VkImage Image, VkImageViewType Type, VkFormat Format, VkComponentMapping Component, VkImageSubresourceRange Subresource)
+void CreateObjectNullptrEngine::CreateImageView(VkDevice Device, VkImageView& ImageView, VkImage Image, VkImageViewType Type, VkFormat Format, VkComponentMapping Component, VkImageSubresourceRange Subresource)
 {
     VkImageViewCreateInfo ViewInfo = {
             .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
@@ -74,14 +67,10 @@ VkImageView CreateObjectNullptrEngine::CreateImageView(VkDevice Device, VkImage 
             .subresourceRange = Subresource //Под-ресурсы
     };
 
-    VkImageView ImageView = {};
-
     vkCreateImageView(Device, &ViewInfo, nullptr, &ImageView);
-
-    return ImageView;
 }
 
-VkBufferView CreateObjectNullptrEngine::CreateBufferView(VkDevice Device, VkBuffer Buffer, VkFormat Format, VkDeviceSize Offset, VkDeviceSize Range)
+void CreateObjectNullptrEngine::CreateBufferView(VkDevice Device, VkBufferView& BufferView, VkBuffer Buffer, VkFormat Format, VkDeviceSize Offset, VkDeviceSize Range)
 {
     VkBufferViewCreateInfo BufferViewInfo = {
             .sType = VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO,
@@ -91,10 +80,6 @@ VkBufferView CreateObjectNullptrEngine::CreateBufferView(VkDevice Device, VkBuff
             .range = Range
     };
 
-    VkBufferView BufferView = {};
-
     vkCreateBufferView(Device, &BufferViewInfo, nullptr, &BufferView);
-
-    return BufferView;
 }
 
