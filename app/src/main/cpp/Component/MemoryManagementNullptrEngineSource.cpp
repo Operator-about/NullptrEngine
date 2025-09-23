@@ -1,7 +1,7 @@
 #include"MemoryManagementNullptrEngineComponent.h"
 
 //Выделения памяти для устройства
-VkDeviceMemory MemoryManagementNullptrEngine::SetMemoryDevice(VkDevice Device, uint32_t Size, uint32_t MemoryTypeCount)
+void MemoryManagementNullptrEngine::SetMemoryDevice(VkDevice Device, uint32_t Size, uint32_t MemoryTypeCount, VkDeviceMemory& Memory)
 {
     VkMemoryAllocateInfo MemoryInfo = {
             .sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
@@ -9,61 +9,41 @@ VkDeviceMemory MemoryManagementNullptrEngine::SetMemoryDevice(VkDevice Device, u
             .memoryTypeIndex = MemoryTypeCount //Кол-во типов памяти по индексу
     };
 
-    VkDeviceMemory Memory = {};
 
     vkAllocateMemory(Device, &MemoryInfo, nullptr, &Memory);
-
-    return Memory;
 }
 
 //Получения информации из памяти
-VkDeviceSize MemoryManagementNullptrEngine::GetMemoryDeviceInfo(VkDevice Device, VkDeviceMemory Memory)
+void MemoryManagementNullptrEngine::GetMemoryDeviceInfo(VkDevice Device, VkDeviceMemory Memory, VkDeviceSize& ReturnInfo)
 {
-    VkDeviceSize MemorySize = {};
-    vkGetDeviceMemoryCommitment(Device, Memory, &MemorySize);
-
-    return MemorySize;
+    vkGetDeviceMemoryCommitment(Device, Memory, &ReturnInfo);
 }
 
 //Очистка памяти CPU от кэша устройства
-VkMappedMemoryRange MemoryManagementNullptrEngine::FlushMemoryCPU(VkDevice Device, uint32_t MemoryCount)
+void MemoryManagementNullptrEngine::FlushMemoryCPU(VkDevice Device, uint32_t MemoryCount, VkMappedMemoryRange& Memory)
 {
-    VkMappedMemoryRange MemoryRange = {};
-
-    vkFlushMappedMemoryRanges(Device, MemoryCount, &MemoryRange);
-
-    return MemoryRange;
+    vkFlushMappedMemoryRanges(Device, MemoryCount, &Memory);
 }
 
 //Обновления памяти CPU о кэша устройства
-VkMappedMemoryRange MemoryManagementNullptrEngine::UpdateMemoryCPU(VkDevice Device, uint32_t MemoryCount)
+void MemoryManagementNullptrEngine::UpdateMemoryCPU(VkDevice Device, uint32_t MemoryCount, VkMappedMemoryRange& Memory)
 {
-    VkMappedMemoryRange MemoryRange = {};
-
-    vkInvalidateMappedMemoryRanges(Device, MemoryCount, &MemoryRange);
-
-    return MemoryRange;
+    vkInvalidateMappedMemoryRanges(Device, MemoryCount, &Memory);
 }
 
 
 //Получение требований для памяти от буфера
-VkMemoryRequirements MemoryManagementNullptrEngine::GetBufferMemoryRequirements(VkDevice Device, VkBuffer Buffer)
+void MemoryManagementNullptrEngine::GetBufferMemoryRequirements(VkDevice Device, VkBuffer Buffer, VkMemoryRequirements& MemoryReq)
 {
-    VkMemoryRequirements Memory = {};
-
-    vkGetBufferMemoryRequirements(Device, Buffer, &Memory);
-
-    return Memory;
+    vkGetBufferMemoryRequirements(Device, Buffer, &MemoryReq);
 }
 
 //Получение требований для памяти от изображения
-VkMemoryRequirements MemoryManagementNullptrEngine::GetImageMemoryRequirements(VkDevice Device, VkImage Image)
+void MemoryManagementNullptrEngine::GetImageMemoryRequirements(VkDevice Device, VkImage Image, VkMemoryRequirements& MemoryReq)
 {
-    VkMemoryRequirements Memory = {};
 
-    vkGetImageMemoryRequirements(Device, Image, &Memory);
+    vkGetImageMemoryRequirements(Device, Image, &MemoryReq);
 
-    return Memory;
 }
 
 //Осввобождение памяти
@@ -73,12 +53,9 @@ void MemoryManagementNullptrEngine::Free(VkDevice Device, VkDeviceMemory Memory)
 }
 
 //Предоставление доступа CPU к памяти устройства
-void* MemoryManagementNullptrEngine::MappMemoryCPU(VkDevice Device, VkDeviceMemory Memory, VkDeviceSize Offset, VkDeviceSize Size, VkMemoryMapFlags Flags)
+void MemoryManagementNullptrEngine::MappMemoryCPU(VkDevice Device, VkDeviceMemory Memory, VkDeviceSize Offset, VkDeviceSize Size, VkMemoryMapFlags Flags, void*& Data)
 {
-    void* Data;
     vkMapMemory(Device, Memory, Offset, Size, Flags, &Data);
-
-    return Data;
 }
 
 //Закрытие доступа CPU к памяти устройства

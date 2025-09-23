@@ -21,56 +21,38 @@ void GetDataNullptrEngine::GetFormat(VkPhysicalDevice PhysicalDevice, VkSurfaceK
 }
 
 //Получение параметров определённого формата
-VkFormatProperties GetDataNullptrEngine::GetFormatProperties(VkPhysicalDevice PhysicalDevice, VkFormat Format)
+void GetDataNullptrEngine::GetFormatProperties(VkPhysicalDevice PhysicalDevice, VkFormat Format, VkFormatProperties& FormatProperties)
 {
-    VkFormatProperties FormatProperties = {};
     vkGetPhysicalDeviceFormatProperties(PhysicalDevice, Format, &FormatProperties);
-
-    return FormatProperties;
 }
 
 //Получение параметров формата для изображения по определённым параметрам
-VkImageFormatProperties GetDataNullptrEngine::GetImageFormatProperties(VkPhysicalDevice PhysicalDevice, VkFormat Format, VkImageType Type, VkImageTiling Tiling, VkImageUsageFlags Usage, VkImageCreateFlags Flag)
+void GetDataNullptrEngine::GetImageFormatProperties(VkPhysicalDevice PhysicalDevice, VkFormat Format, VkImageType Type, VkImageTiling Tiling,
+                                                                       VkImageUsageFlags Usage, VkImageCreateFlags Flag, VkImageFormatProperties& ImageFormatProperties)
 {
-    VkImageFormatProperties ImageFormatProperties = {};
     vkGetPhysicalDeviceImageFormatProperties(PhysicalDevice, Format, Type, Tiling, Usage, Flag, &ImageFormatProperties);
-
-    return ImageFormatProperties;
 }
 
 //Получение параметров памяти устройства
-VkPhysicalDeviceMemoryProperties GetDataNullptrEngine::GetPhysicalDeviceMemoryProperties(VkPhysicalDevice PhysicalDevice)
+void GetDataNullptrEngine::GetPhysicalDeviceMemoryProperties(VkPhysicalDevice PhysicalDevice, VkPhysicalDeviceMemoryProperties& MemoryProperties)
 {
-    VkPhysicalDeviceMemoryProperties MemoryProperties = {};
     vkGetPhysicalDeviceMemoryProperties(PhysicalDevice, &MemoryProperties);
-
-    return MemoryProperties;
 }
 
 //Получение параметров устройства
-VkPhysicalDeviceProperties GetDataNullptrEngine::GetPhysicalDeviceProperties(VkPhysicalDevice PhysicalDevice)
+void GetDataNullptrEngine::GetPhysicalDeviceProperties(VkPhysicalDevice PhysicalDevice, VkPhysicalDeviceProperties& Properties)
 {
-    VkPhysicalDeviceProperties PhysicalDeviceProperties = {};
-    vkGetPhysicalDeviceProperties(PhysicalDevice, &PhysicalDeviceProperties);
-
-    return PhysicalDeviceProperties;
+    vkGetPhysicalDeviceProperties(PhysicalDevice, &Properties);
 }
 
 //Получение дополнительных функций из устройства
-VkPhysicalDeviceFeatures GetDataNullptrEngine::GetPhysicalDeviceFeatures(VkPhysicalDevice PhysicalDevice)
+void GetDataNullptrEngine::GetPhysicalDeviceFeatures(VkPhysicalDevice PhysicalDevice, VkPhysicalDeviceFeatures& Features)
 {
-    VkPhysicalDeviceFeatures DeviceFeatures = {};
-    vkGetPhysicalDeviceFeatures(PhysicalDevice, &DeviceFeatures);
-
-    return DeviceFeatures;
+    vkGetPhysicalDeviceFeatures(PhysicalDevice, &Features);
 }
 
 //Получение под-ресурсов изображения
-pair<VkImageSubresource, VkSubresourceLayout> GetDataNullptrEngine::GetImageSubresource(VkDevice Device, VkImage Image)
+void GetDataNullptrEngine::GetImageSubresource(VkDevice Device, VkImage Image, VkImageSubresource& Subresource, VkSubresourceLayout& Layout)
 {
-    const VkImageSubresource Subresource = {};
-    VkSubresourceLayout SubresourceLayout = {};
-    vkGetImageSubresourceLayout(Device, Image, &Subresource, &SubresourceLayout);
-
-    return {Subresource, SubresourceLayout};
+    vkGetImageSubresourceLayout(Device, Image, &Subresource, &Layout);
 }
