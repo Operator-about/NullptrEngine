@@ -20,6 +20,10 @@ public:
     void GetImageMemoryRequirements(VkDevice Device, VkImage Image, VkMemoryRequirements& MemoryReq); //Получение требований изображений к памяти, параметры: устройство, изображения
     void BindBufferMemory(VkDevice Device, VkDeviceMemory Memory, VkBuffer Buffer, VkDeviceSize Offset); //Привязка буфера к выделенной памяти, параметры: устройство, память, буфер, отступ записи
     void BindImageMemory(VkDevice Device, VkDeviceMemory Memory, VkImage Image, VkDeviceSize Offset); //Привязка изображение к выделенной памяти, параметры: устройство, память, изображение, отступ записи
+    void ResetCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferResetFlags Flag, bool SoftReset = false, VkQueue Queue = nullptr); //Сброс CommandBuffer, параметры: Commandbuffer, флаг, аккуратное выключение, поток
+
+    //Сброс CommandPool, параметры: Устройство, CommandPool, флаг, аккуратное выключение, поток
+    void ResetCommandPool(VkDevice Device, VkCommandPool Pool, VkCommandPoolResetFlags Flag, bool SoftReset = false, VkQueue Queue = nullptr);
     void Free(VkDevice Device, VkDeviceMemory Memory); //Освобождение выделенной памяти, параметры: устройство, память
 };
 

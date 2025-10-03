@@ -6,8 +6,6 @@ StartupNullptrEngine::StartupNullptrEngine(ANativeWindow* Window)
     this->StartupNullptrEnginePhysicalDevice();
     this->StartupNullptrEngineSurface(Window);
     this->StartupNullptrEngineDevice();
-
-
 }
 
 void StartupNullptrEngine::StartupNullptrEngineInstance()

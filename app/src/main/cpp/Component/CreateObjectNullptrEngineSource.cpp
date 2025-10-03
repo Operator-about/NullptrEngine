@@ -1,14 +1,44 @@
 #include"CreateObjectNullptrEngineComponent.h"
 
+//Запись изображения
+void CreateObjectNullptrEngine::WriteImage(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkBuffer ResourceBuffer, VkImage TargetImage,
+                                           VkImageLayout TargetLayerImage,
+                                           uint32_t Regions, VkDeviceSize BufferOffset, uint32_t BufferRowLength, uint32_t BufferImageHeight, VkImageSubresourceLayers Subresource, VkOffset3D ImageOffset,
+                                           VkExtent3D ImageSize)
+{
+    //Создание информации для начала записи в буфер
+    VkCommandBufferBeginInfo Info = {
+            .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+            .flags = Flag, //Флаг о том, сколько раз будет использован буфер
+    };
+
+    //Начало записи...
+    vkBeginCommandBuffer(Buffer, &Info);
+
+    //Границы региона записи
+    VkBufferImageCopy Copy = {
+        .bufferOffset = BufferOffset, //Точка в CommandBuffer
+        .bufferRowLength = BufferRowLength, //Длина рядов в CommandBuffer
+        .bufferImageHeight = BufferImageHeight, //Высота изображения в CommandBuffer
+        .imageSubresource = Subresource, //Под-ресурсы изображения
+        .imageOffset = ImageOffset, //Начало изображения
+        .imageExtent = ImageSize //Размер изображения
+    };
+    //Запись
+    vkCmdCopyBufferToImage(Buffer, ResourceBuffer, TargetImage, TargetLayerImage, Regions, &Copy);
+
+    //Конец ззаписи
+    vkEndCommandBuffer(Buffer);
+}
+
 //Запись команд в командный буфер
-void CreateObjectNullptrEngine::WriteCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkCommandBufferInheritanceInfo InheritanceInfo, VkBuffer ResourceBuffer, VkBuffer TargetBuffer, uint32_t Regions,
+void CreateObjectNullptrEngine::WriteCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkBuffer ResourceBuffer, VkBuffer TargetBuffer, uint32_t Regions,
                                                    VkDeviceSize ResourceOffset, VkDeviceSize TargetOffset, VkDeviceSize Size)
 {
     //Создание информации для начала записи в буфер
     VkCommandBufferBeginInfo Info = {
             .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
             .flags = Flag, //Флаг о том, сколько раз будет использован буфер
-            .pInheritanceInfo = &InheritanceInfo
     };
 
     //Начало записи...
@@ -21,7 +51,7 @@ void CreateObjectNullptrEngine::WriteCommandBuffer(VkCommandBuffer Buffer, VkCom
             .size = Size //Размер данных для копирования
     };
     //Запись...
-    vkCmdCopyBuffer(Buffer, ResourceBuffer, TargetBuffer, 1, &Copy);
+    vkCmdCopyBuffer(Buffer, ResourceBuffer, TargetBuffer, Regions, &Copy);
 
     //Завершение записи
     vkEndCommandBuffer(Buffer);

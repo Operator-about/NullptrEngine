@@ -32,10 +32,15 @@ public:
     //Выделение CommandBuffer, параметры: устройство, CommandBuffer, Pool, уровень, кол-во
     void AllocationCommandBuffer(VkDevice Device, VkCommandBuffer& Buffer, VkCommandPool Pool, VkCommandBufferLevel Level, uint32_t Count);
 
-    //Запись в CommandBuffer, параметры: CommandBuffer, флаг, InheritanceInfo, источник копирования, цель копирования, кол-во регионов(копирования),
+    //Запись в CommandBuffer, параметры: CommandBuffer, флаг, источник копирования, цель копирования, кол-во регионов(копирования),
     //начало источника копирования, начало цели копирования, размер данных для копирования
-    void WriteCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkCommandBufferInheritanceInfo InheritanceInfo, VkBuffer ResourceBuffer, VkBuffer TargetBuffer,
+    void WriteCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkBuffer ResourceBuffer, VkBuffer TargetBuffer,
                             uint32_t Regions, VkDeviceSize ResourceOffset, VkDeviceSize TargetOffset, VkDeviceSize Size);
+
+    //Запись изображения, параметры: CommandBuffer, флаг, источник копирования, цель копирования, состояние использования изображения, регионы, точка в CommandBuffer, длина рядов в CommandBuffer,
+    //высота изображения в CommandBuffer, под-ресурсы изображения, точка в изображении, размер изображения
+    void WriteImage(VkCommandBuffer Buffer, VkCommandBufferUsageFlags Flag, VkBuffer ResourceBuffer, VkImage TargetImage, VkImageLayout TargetLayerImage,
+                    uint32_t Regions, VkDeviceSize BufferOffset, uint32_t BufferRowLength, uint32_t BufferImageHeight, VkImageSubresourceLayers Subresource, VkOffset3D ImageOffset, VkExtent3D ImageSize);
 };
 
 #endif //NULLPTRENGINE_CREATEOBJECTNULLPTRENGINECOMPONENT_H
