@@ -1,5 +1,34 @@
 #include"MemoryManagementNullptrEngineComponent.h"
 
+//Сброс CommandBuffer
+void MemoryManagementNullptrEngine::ResetCommandBuffer(VkCommandBuffer Buffer, VkCommandBufferResetFlags Flag, bool SoftReset, VkQueue Queue)
+{
+    if(SoftReset == true)
+    {
+        vkQueueWaitIdle(Queue);
+        vkResetCommandBuffer(Buffer, Flag);
+    }
+    else
+    {
+        vkResetCommandBuffer(Buffer, Flag);
+    }
+
+}
+
+//Сброс CommandPool
+void MemoryManagementNullptrEngine::ResetCommandPool(VkDevice Device, VkCommandPool Pool, VkCommandPoolResetFlags Flag, bool SoftReset, VkQueue Queue)
+{
+    if(SoftReset == true)
+    {
+        vkQueueWaitIdle(Queue);
+        vkResetCommandPool(Device, Pool, Flag);
+    }
+    else
+    {
+        vkResetCommandPool(Device, Pool, Flag);
+    }
+}
+
 //Выделения памяти для устройства
 void MemoryManagementNullptrEngine::SetMemoryDevice(VkDevice Device, uint32_t Size, uint32_t MemoryTypeCount, VkDeviceMemory& Memory)
 {

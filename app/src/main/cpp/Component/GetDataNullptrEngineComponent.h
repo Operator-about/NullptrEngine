@@ -23,6 +23,12 @@ public:
     void GetPhysicalDeviceProperties(VkPhysicalDevice PhysicalDevice, VkPhysicalDeviceProperties& Properties); //Получение параметров физического устройства, параметры: физическое устройство
     void GetPhysicalDeviceFeatures(VkPhysicalDevice PhysicalDevice, VkPhysicalDeviceFeatures& Features); //Получение дополнительных возможностей физического устройства, параметры: физическое устройство
     void GetImageSubresource(VkDevice Device, VkImage Image, VkImageSubresource& Subresource, VkSubresourceLayout& Layout); //Получение под-ресурсов изображения, параметры: устройство, изображение
+    void GetQueue(VkDevice Device, VkQueue& Queue, uint32_t QueueFamily, uint32_t QueueIndex); //Получение экземпляра потока, параметры: устройство, поток, семейство потоков, индекс потока
+
+    //Отправка команд из CommandBuffer на выполнение, параметры: буфер, поток, барьер, светофор, ожидающий светофор, WaitDstStageMask, кол-во команд для выполнения, кол-во CommandBuffer, кол-во светофороф,
+    //кол-во ожидающих светофоров
+    void CommandSubmit(VkCommandBuffer Buffer, VkQueue Queue, VkFence Fence, VkSemaphore Semaphore, VkSemaphore WaitSemaphore, VkPipelineStageFlags WaitDstStageMask,
+                       uint32_t CommandSubmitCount, uint32_t CommandBufferCount, uint32_t SemaphoreCount, uint32_t WaitSemaphoreCount);
 };
 
 #endif //NULLPTRENGINE_GETDATANULLPTRENGINECOMPONENT_H

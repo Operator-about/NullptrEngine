@@ -1,5 +1,31 @@
 #include "GetDataNullptrEngineComponent.h"
 
+//Отправка команд из CommandBuffer на выполнение
+void GetDataNullptrEngine::CommandSubmit(VkCommandBuffer Buffer, VkQueue Queue, VkFence Fence, VkSemaphore Semaphore, VkSemaphore WaitSemaphore, VkPipelineStageFlags WaitDstStageMask,
+                                         uint32_t CommandSubmitCount, uint32_t CommandBufferCount,
+                                         uint32_t SemaphoreCount, uint32_t WaitSemaphoreCount)
+{
+    //Создание информации о отправке
+    VkSubmitInfo Info = {
+            .sType = VK_STRUCTURE_TYPE_SUBMIT_INFO,
+            .waitSemaphoreCount = WaitSemaphoreCount, //Кол-во ожидающих светофоров
+            .pWaitSemaphores = &WaitSemaphore, //Ожидающие светофоры
+            .pWaitDstStageMask = &WaitDstStageMask,
+            .commandBufferCount = CommandBufferCount, //Кол-во CommandBuffer
+            .pCommandBuffers = &Buffer, //Сам CommandBuffer
+            .signalSemaphoreCount = SemaphoreCount, //Кол-во светофоров
+            .pSignalSemaphores = &Semaphore //Сам светофор
+    };
+    //Отправка
+    vkQueueSubmit(Queue, CommandSubmitCount, &Info, Fence);
+}
+
+//Получение экземпляра потока
+void GetDataNullptrEngine::GetQueue(VkDevice Device, VkQueue &Queue, uint32_t QueueFamily, uint32_t QueueIndex)
+{
+    vkGetDeviceQueue(Device, QueueFamily, QueueIndex, &Queue);
+}
+
 //Получение формата по параметрам
 void GetDataNullptrEngine::GetFormat(VkPhysicalDevice PhysicalDevice, VkSurfaceKHR Surface, VkColorSpaceKHR Color, VkFormat LFormat)
 {
