@@ -2,7 +2,7 @@
 <img width="1920" height="1080" alt="NullptrEngineLogo" src="https://github.com/user-attachments/assets/94d1e758-8ace-4644-8809-aaf2c5a45524" />
 
 **NullptrEngine** - движок для создания игр на Android. \
-**NullptrEngine** находится в активной стадии разработки.
+**ДВИЖОК БОЛЕЕ НЕ РАЗРАБАТЫВАЕТСЯ!**.
 
 ❗**Версии Android для работы с движком:** \
 Минимальной версией Android для работы с движком, является версией: **Android 10**. \
